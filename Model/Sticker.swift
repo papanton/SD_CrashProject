@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-class Sticker: Model {
+class Sticker {
 
   let imageUrl: URL
 

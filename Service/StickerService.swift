@@ -8,15 +8,16 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 class StickerService {
 
   enum Router: URLRequestConvertible {
-    case getStickers(packId: Int, page: Int?)
+    case getStickers
 
     var path: String {
       switch self {
-      case .getStickers(_, _): return "animated"
+      case .getStickers: return "animated"
       }
     }
 
@@ -24,16 +25,16 @@ class StickerService {
       let URL = Foundation.URL(string: "https://dashboard.stickerpop.co/api/")!
       var request = URLRequest(url: URL.appendingPathComponent(path))
       request.httpMethod = HTTPMethod.get.rawValue
-      switch self {
-      case .getStickers(_, let page):
-        let parameters: Parameters = [Strings.Page: page ?? 1]
-        return try URLEncoding().encode(request, with: parameters)
-      }
+      return try URLEncoding().encode(request, with: [:])
     }
   }
 
-  class func getStickers() -> APIPagedList<Sticker> {
-    return APIPagedList<Sticker>(router: Router.getStickers, id: -1)
+  class func getStickers(completion: @escaping([Sticker]) -> Void) {
+    Alamofire.request(Router.getStickers).validate().responseJSON { response in
+      guard let value = response.result.value else { return }
+      let stickers = JSON(value)[Strings.Data].arrayValue.compactMap({ Sticker(data: $0) })
+      completion(stickers)
+    }
   }
 
 }
