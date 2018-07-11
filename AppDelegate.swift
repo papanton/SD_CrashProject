@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
+    SDImageCache.shared().config.shouldUseWeakMemoryCache = false
     return true
+  }
+
+  func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
+    print("Memory warning received")
   }
 
   func applicationWillResignActive(_ application: UIApplication) {
