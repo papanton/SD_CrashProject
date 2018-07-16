@@ -64,6 +64,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDelegateFlow
     return CGSize(width: itemWidth, height: itemWidth * cellRatio)
   }
 
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+  //  UIControl().sendAction(Selector(("_performMemoryWarning")), to: UIApplication.shared, for: nil)
+  }
+
 }
 
 extension ViewController: UICollectionViewDataSource {

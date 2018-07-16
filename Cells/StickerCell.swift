@@ -20,6 +20,7 @@ class StickerCell: UICollectionViewCell {
 
   override func prepareForReuse() {
     super.prepareForReuse()
+    imageVIew.image = nil
     imageVIew.animatedImage = nil
     imageVIew.sd_cancelCurrentImageLoad()
   }
